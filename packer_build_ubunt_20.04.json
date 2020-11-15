@@ -1,0 +1,38 @@
+{
+    "builders": [
+      {
+        "type": "vsphere-iso",
+  
+        "vcenter_server": "192.168.50.104",
+        "insecure_connection": "true",
+        "username": "root",
+        "password": "password",
+        "host": "192.168.50.90",
+        
+        "communicator": "winrm",
+        "winrm_username": "Administrator",
+        "winrm_password": "P@ssw0rd",
+
+        "vm_name":  "packerimage",
+        "convert_to_template": "true",
+        "cpus": "2",
+        "ram": "4096",
+        "network": "VM Network",
+        "network_card": "vmxnet3",
+        "datastore": "ESXi1-Internal",
+        "disk_controller_type":  "lsilogic-sas",
+		"guest_os_type": "Ubuntu Linux (64-bit)",
+		"disk_thin_provisioned": true,
+        "disk_size": "15000",
+		"iso_paths": [
+        "[datastore1] ubuntu-20.04.1-live-server-amd64.iso",
+      ],
+		"floppy_files": [
+        "setup/autounattend.xml",
+        "setup/setup.ps1",
+        "setup/vmtools.cmd"
+      ]
+        
+      }
+    ]
+  }
