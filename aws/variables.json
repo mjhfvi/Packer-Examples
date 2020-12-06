@@ -1,0 +1,8 @@
+{
+  "AWS_ACCESS_KEY": "",
+  "AWS_SECRET_KEY":"",
+  "AWS_REGION":"eu-central-1",
+  "AMI_ACCESS_KEY":"",
+  "AMI_SECRET_KEY":""
+
+}

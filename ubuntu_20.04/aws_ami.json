@@ -1,0 +1,47 @@
+{
+    "variables": {
+        "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
+        "aws_secret_key": "{{env `AWS_SECRET_KEY`}}",
+        "region":         "{{env `AWS_REGION`}}"
+    },
+    "builders": [
+        {
+            "access_key": "{{user `AWS_ACCESS_KEY`}}",
+            "ami_name": "My Packer Linux Image Demo - {{timestamp}}",
+            "instance_type": "t2.micro",
+            "region": "{{user `AWS_REGION`}}",
+            "secret_key": "{{user `AWS_SECRET_KEY`}}",
+            "source_ami_filter": {
+              "filters": {
+                "virtualization-type": "hvm",
+                "architecture": "x86_64",
+                "name": "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*",
+                "block-device-mapping.volume-type": "gp2",
+                "root-device-type": "ebs"
+              },
+              "owners": ["099720109477"],
+              "most_recent": true
+            },
+            "ssh_username": "ubuntu",
+            "type": "amazon-ebs"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "file",
+            "source": "./welcomefile",
+            "destination": "/home/ubuntu/"
+        },
+        {
+            "type": "shell",
+            "inline":[
+                "ls -al /home/ubuntu",
+                "cat /home/ubuntu/welcomefile"
+            ]
+        },
+        {
+            "type": "shell",
+            "script": "./setup.sh"
+        }
+    ]
+}

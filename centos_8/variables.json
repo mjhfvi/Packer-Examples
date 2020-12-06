@@ -1,0 +1,19 @@
+{
+  "vm_name": "nodeubuntu01",
+  "vm_name_centos": "nodecentos01",
+  "win_vm_name": "wintest00",
+
+  "vcenter-server":"",
+  "vcenter-username":"administrator@vsphere.local",
+  "vcenter-password":"",
+  "esxi_host":"",
+
+  "ssh-username": "",
+  "ssh-password": "",
+  
+  "user-full-name": "",
+  
+  "system-notes": "Build with Packer Script, User| Password|",
+  
+  "install-packages": "docker curl software-properties-common open-vm-tools"
+}

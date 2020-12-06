@@ -1,0 +1,67 @@
+{
+    "builders": [{
+          "type": 					"vsphere-iso",
+		  "vm_version":				"18",					
+		  "guest_os_type":          "ubuntu64Guest",					
+		  "notes":					"{{user `system-notes`}}",
+
+          "vm_name":                "{{user `vm_name`}}",
+          "host":                   "{{user `esxi_host`}}",
+          "datastore":              "datastore1",
+          "boot_order":             "disk,cdrom",
+		  "datacenter": 			"Datacenter",
+		  
+		  "CPUs":                   1,
+          "RAM":                    1024,
+
+          "vcenter_server":         "{{user `vcenter-server`}}",
+          "username":               "{{user `vcenter-username`}}",
+          "password":               "{{user `vcenter-password`}}",
+          "insecure_connection":    "true",
+    
+          "ssh_username":           "{{user `ssh-username`}}",
+          "ssh_password":           "{{user `ssh-password`}}",
+		  "ssh_timeout": 			"20m",
+		  "ssh_wait_timeout":		"20m",
+    
+          "disk_controller_type":   "pvscsi",
+	  
+          "storage": [{
+			"disk_size": 			15360,
+			"disk_thin_provisioned": true
+           }],
+		  
+          "network_adapters": [{
+			"network": 				"VM Network",
+			"network_card": 		"vmxnet3"
+            }],
+		  
+          "iso_paths": 				"[datastore1] ubuntu-18.04.5-server-amd64.iso",  
+		  
+		  "boot_wait": "10s",
+		  
+		  "floppy_files": ["./preseed.cfg"],
+		  "boot_command": [
+			"<esc><wait>",
+			"<esc><wait>",
+			"<enter><wait>",
+			"/install/vmlinuz<wait>",
+			" initrd=/install/initrd.gz",
+			" auto-install/enable=true",
+			" debconf/priority=critical",
+            " file=/media/preseed.cfg",
+			" -- <wait>",
+			"<enter><wait>"
+		  ],
+		
+		  "remove_cdrom":           "true"
+
+		  }],
+
+     "provisioners": [{
+          "inline": [
+
+            "echo Template Build Complete"
+          ],
+          "type": 					"shell"
+        }]}
